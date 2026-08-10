@@ -1,7 +1,7 @@
 from pathlib import Path
 import mne
 
-class EEGloader():
+class EEGLoader:
 
     def load(self,file_path:str ):
         path= Path(file_path)
