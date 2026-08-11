@@ -1,6 +1,6 @@
-from core.loader import  EEGLoader
+from core.loader import EEGLoader
 from core.metadata import EEGMetadata
-import mne
+from preprocessing.epoching import EEGEpoching
 
 
 def main():
@@ -11,16 +11,34 @@ def main():
 
     EEGMetadata.print_summary(raw)
 
-    events, event_dict = mne.events_from_annotations(raw)
+    epochs = EEGEpoching.create_motor_imagery_epochs(raw)
 
-    print("\nEvent Dictionary:")
-    print(event_dict)
+    print("\n" + "=" * 60)
+    print("MOTOR IMAGERY EPOCHS")
+    print("=" * 60)
 
-    print("\nNumber of events:")
-    print(len(events))
+    print(f"Number of epochs : {len(epochs)}")
+    print(f"Epoch shape      : {epochs.get_data().shape}")
+    print(f"Sampling rate    : {epochs.info['sfreq']} Hz")
+    print(f"Channels         : {len(epochs.ch_names)}")
+    print(f"Time range       : {epochs.tmin} to {epochs.tmax} seconds")
 
-    print("\nFirst 20 events:")
-    print(events[:20])
+    print("\nEpoch counts:")
+    print(epochs["left"])
+    print(epochs["right"])
+    print(epochs["feet"])
+    print(epochs["tongue"])
+
+    print("\nEpoch event IDs:")
+    print(epochs.event_id)
+
+    # Visualize one left-hand imagery trial
+    epochs["left"].plot(
+        n_epochs=1,
+        n_channels=22,
+        scalings="auto",
+        block=True
+    )
 
 
 if __name__ == "__main__":
