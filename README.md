@@ -4,81 +4,50 @@ A modular EEG signal processing framework for Brain–Computer Interface (BCI) r
 
 ## Overview
 
-EIDOS-BCI is an open-source framework designed for EEG signal analysis using Python and MNE.
+EIDOS-BCI is a Python-based framework for processing and analyzing EEG signals using MNE-Python.
 
-The project is being developed as part of IEEE ESPC 2026 and serves as the foundation for future research in:
+The project is being developed as part of **IEEE ESPC 2026** and focuses on building a modular pipeline for **Motor Imagery (MI) EEG analysis**.
 
-- Motor Imagery (MI)
-- EEG Signal Processing
-- Machine Learning for BCI
-- Real-Time Brain–Computer Interfaces
-- Virtual Reality Integration
+The long-term goal is to develop a foundation for:
 
----
-
-## Features
-
-- EEG data loading (GDF format)
-- Metadata extraction
-- Signal visualization (coming soon)
-- Signal preprocessing (coming soon)
-- Feature extraction (coming soon)
-- Machine learning pipeline (planned)
+- Motor Imagery Brain–Computer Interfaces
+- EEG signal processing
+- Machine learning for BCI
+- Real-time BCI systems
+- Brain–Computer Interface and Virtual Reality research
 
 ---
 
-## Dataset
+## Current Pipeline
 
-This project uses:
-
-**BCI Competition IV – Dataset 2a**
-
-The dataset is **not included** in this repository.
-
-Download it from the official BCI Competition website and place it in:
-
-dataset/2a/
-
----
-
-## Technologies
-
-- Python
-- MNE
-- NumPy
-- SciPy
-- Matplotlib
-- Scikit-learn
-
----
-
-## Project Structure
+The current processing pipeline is:
 
 ```text
-core/
-preprocessing/
-visualization/
-analysis/
-paper/
-docs/
-```
-
----
-
-## Current Progress
-
-- [x] Project setup
-- [x] EEG Loader
-- [x] Dataset loading
-- [x] Metadata module
-- [ ] Visualization
-- [ ] Filtering
-- [ ] FFT
-- [ ] Feature extraction
-- [ ] Machine learning
-
----
-
-## Author
-
-Shihab Eldin Ibrahim
+BCI Competition IV Dataset 2a
+            │
+            ▼
+       EEG Loading
+            │
+            ▼
+     Dataset Metadata
+            │
+            ▼
+     Event Extraction
+            │
+            ▼
+    Motor Imagery Epoching
+            │
+            ▼
+      8–30 Hz Filtering
+            │
+            ├───────────────┐
+            ▼               ▼
+         PSD           ERD / ERS
+            │               │
+            └───────┬───────┘
+                    ▼
+                   CSP
+                    │
+                    ▼
+             Classification
+               (planned)
