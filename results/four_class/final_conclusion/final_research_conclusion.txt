@@ -9,17 +9,18 @@ The evaluation was conducted using the BCI Competition IV Dataset 2a. The experi
 For subject-independent evaluation, Leave-One-Subject-Out (LOSO) validation was used. In each fold, one subject was completely held out for testing while the remaining subjects were used for training. CSP spatial filters were fitted exclusively on the training subjects and then applied to the held-out subject.
 
 3. SUBJECT-INDEPENDENT RESULTS
-Across the evaluated classifiers, the highest mean FBCSP LOSO accuracy was obtained by Logistic Regression, with a mean accuracy of 37.58%.
+The highest mean Standard CSP LOSO accuracy was obtained by LDA, with a mean accuracy of 37.58%.
+The highest mean FBCSP LOSO accuracy was obtained by Logistic Regression, with a mean accuracy of 37.58%.
 Considering the three classifiers together, the mean accuracy across classifier-level LOSO results was 36.48% for Standard CSP and 36.32% for FBCSP, corresponding to an overall change of -0.17 percentage points.
 
 4. STATISTICAL ANALYSIS
 The comparison between Standard CSP and FBCSP was performed at the subject level. Shapiro-Wilk tests were used to assess the normality of paired subject differences. Paired t-tests and Wilcoxon signed-rank tests were then used to evaluate whether FBCSP produced a statistically significant change in performance.
 
-For LDA, FBCSP decreased mean LOSO accuracy by -0.50 percentage points. The paired t-test indicates no statistically significant difference between Standard CSP and FBCSP. The Wilcoxon signed-rank test also indicates no statistically significant difference. Cohen's d = -0.0801, indicating a negligible effect. N/A of the evaluated subjects improved, while N/A decreased.
-For SVM, FBCSP decreased mean LOSO accuracy by -0.08 percentage points. The paired t-test indicates no statistically significant difference between Standard CSP and FBCSP. The Wilcoxon signed-rank test also indicates no statistically significant difference. Cohen's d = -0.0120, indicating a negligible effect. N/A of the evaluated subjects improved, while N/A decreased.
-For Logistic Regression, FBCSP improved mean LOSO accuracy by +0.08 percentage points. The paired t-test indicates no statistically significant difference between Standard CSP and FBCSP. The Wilcoxon signed-rank test also indicates no statistically significant difference. Cohen's d = 0.0107, indicating a negligible effect. N/A of the evaluated subjects improved, while N/A decreased.
+For LDA, FBCSP decreased by 0.50 percentage points. The paired t-test indicates no statistically significant difference (p = 0.8162). The Wilcoxon signed-rank test indicates no statistically significant difference (p = 0.8203). Cohen's d = -0.0801, indicating a negligible effect. 4 of the evaluated subjects improved, while 5 decreased.
+For SVM, FBCSP decreased by 0.08 percentage points. The paired t-test indicates no statistically significant difference (p = 0.9721). The Wilcoxon signed-rank test indicates no statistically significant difference (p = 0.9609). Cohen's d = -0.0120, indicating a negligible effect. 5 of the evaluated subjects improved, while 4 decreased.
+For Logistic Regression, FBCSP improved by 0.08 percentage points. The paired t-test indicates no statistically significant difference (p = 0.9751). The Wilcoxon signed-rank test indicates no statistically significant difference (p = 1.0000). Cohen's d = 0.0107, indicating a negligible effect. 5 of the evaluated subjects improved, while 4 decreased.
 
-Overall, none of the evaluated classifiers showed a statistically significant improvement from Standard CSP to FBCSP under LOSO evaluation. Therefore, the results do not provide statistical evidence that the tested FBCSP configuration consistently improves subject-independent four-class motor imagery classification.
+Overall, none of the evaluated classifiers showed a statistically significant difference between Standard CSP and FBCSP under LOSO evaluation. Therefore, the results do not provide statistical evidence that the tested FBCSP configuration consistently improves subject-independent four-class motor imagery classification.
 
 5. INTERPRETATION
 The LOSO results demonstrate the difficulty of subject-independent motor imagery EEG classification. Performance varies considerably between subjects, indicating substantial inter-subject variability in EEG patterns.
