@@ -2,90 +2,140 @@
 
 ## Overview
 
-EIDOS-BCI is organized as a modular EEG processing pipeline.
+EIDOS-BCI is a modular EEG signal processing and machine learning framework for
+Brain–Computer Interface (BCI) research.
 
-The architecture separates data loading, metadata handling, preprocessing, signal analysis, and machine learning so that each stage can be developed and tested independently.
+The system is organized into separate layers for:
+
+- EEG data loading
+- Dataset metadata and event handling
+- Signal preprocessing
+- EEG analysis and feature extraction
+- Within-subject classification
+- Cross-subject evaluation
+- Statistical analysis
+- Research result generation
+
+The architecture is designed so that individual processing stages can be
+developed, tested, and extended independently.
 
 ---
 
 ## System Architecture
 
 ```text
-                    ┌─────────────────────────┐
-                    │   BCI Competition IV    │
-                    │       Dataset 2a        │
-                    │        A01T.gdf          │
-                    └────────────┬────────────┘
-                                 │
-                                 ▼
-                    ┌─────────────────────────┐
-                    │       EEG Loader         │
-                    │      core/loader.py      │
-                    │                          │
-                    │  Load GDF → MNE Raw      │
-                    └────────────┬────────────┘
-                                 │
-                                 ▼
-                    ┌─────────────────────────┐
-                    │     EEG Metadata        │
-                    │    core/metadata.py     │
-                    │                          │
-                    │ Channels / Sampling     │
-                    │ Events / Duration       │
-                    └────────────┬────────────┘
-                                 │
-                                 ▼
-                    ┌─────────────────────────┐
-                    │       Epoching           │
-                    │ preprocessing/epoching.py│
-                    │                          │
-                    │ Motor Imagery Events     │
-                    │ 0–4 second epochs        │
-                    └────────────┬────────────┘
-                                 │
-                                 ▼
-                    ┌─────────────────────────┐
-                    │       Filtering          │
-                    │ preprocessing/filtering.py│
-                    │                          │
-                    │       8–30 Hz             │
-                    └────────────┬────────────┘
-                                 │
-                  ┌──────────────┴──────────────┐
-                  │                             │
-                  ▼                             ▼
-       ┌─────────────────────┐       ┌─────────────────────┐
-       │      PSD Analysis   │       │     ERD / ERS       │
-       │                     │       │                     │
-       │ Frequency-domain    │       │ Mu: 8–13 Hz         │
-       │ power analysis      │       │ Beta: 13–30 Hz      │
-       └──────────┬──────────┘       └──────────┬──────────┘
-                  │                             │
-                  └──────────────┬──────────────┘
-                                 │
-                                 ▼
-                    ┌─────────────────────────┐
-                    │          CSP            │
-                    │      analysis/csp.py    │
-                    │                          │
-                    │ Spatial filtering and   │
-                    │ feature extraction      │
-                    └────────────┬────────────┘
-                                 │
-                                 ▼
-                    ┌─────────────────────────┐
-                    │     Machine Learning    │
-                    │                         │
-                    │         LDA             │
-                    │      (Planned)          │
-                    └────────────┬────────────┘
-                                 │
-                                 ▼
-                    ┌─────────────────────────┐
-                    │       Evaluation        │
-                    │                         │
-                    │ Accuracy                │
-                    │ Confusion Matrix        │
-                    │ Classification Report   │
-                    │      (Planned)          │
-                    └─────────────────────────┘
+                    ┌──────────────────────────────┐
+                    │   BCI Competition IV         │
+                    │       Dataset 2a             │
+                    │                              │
+                    │  9 subjects                  │
+                    │  22 EEG + 3 EOG channels    │
+                    │  250 Hz                      │
+                    │  4 Motor Imagery classes     │
+                    └──────────────┬───────────────┘
+                                   │
+                                   ▼
+                    ┌──────────────────────────────┐
+                    │         EEG Loading           │
+                    │                              │
+                    │       core/loader.py         │
+                    │                              │
+                    │   GDF → MNE Raw object       │
+                    └──────────────┬───────────────┘
+                                   │
+                                   ▼
+                    ┌──────────────────────────────┐
+                    │      Dataset Metadata         │
+                    │                              │
+                    │      core/metadata.py        │
+                    │                              │
+                    │ Channels / Sampling Rate     │
+                    │ Events / Recording Info      │
+                    └──────────────┬───────────────┘
+                                   │
+                                   ▼
+                    ┌──────────────────────────────┐
+                    │        Preprocessing          │
+                    │                              │
+                    │      preprocessing/          │
+                    │                              │
+                    │ Event Extraction             │
+                    │ Motor Imagery Epoching       │
+                    │ 8–30 Hz Bandpass Filtering   │
+                    └──────────────┬───────────────┘
+                                   │
+                                   ▼
+              ┌────────────────────┴────────────────────┐
+              │                                         │
+              ▼                                         ▼
+   ┌──────────────────────┐                  ┌──────────────────────┐
+   │     Signal Analysis  │                  │   Spatial Features   │
+   │                      │                  │                      │
+   │ PSD                  │                  │ Standard CSP         │
+   │ ERD / ERS            │                  │ Filter Bank CSP      │
+   │                      │                  │                      │
+   └──────────┬───────────┘                  └──────────┬───────────┘
+              │                                         │
+              └────────────────────┬────────────────────┘
+                                   │
+                                   ▼
+                    ┌──────────────────────────────┐
+                    │      Feature Extraction       │
+                    │                              │
+                    │ CSP / FBCSP feature vectors  │
+                    └──────────────┬───────────────┘
+                                   │
+                                   ▼
+                    ┌──────────────────────────────┐
+                    │        Classification         │
+                    │                              │
+                    │ LDA                          │
+                    │ SVM                          │
+                    │ Logistic Regression           │
+                    │                              │
+                    │ Four-class MI classification │
+                    └──────────────┬───────────────┘
+                                   │
+                    ┌──────────────┴───────────────┐
+                    │                              │
+                    ▼                              ▼
+        ┌──────────────────────┐       ┌────────────────────────┐
+        │  Within-Subject      │       │   Cross-Subject        │
+        │     Evaluation       │       │       Evaluation       │
+        │                      │       │                        │
+        │ Subject-specific     │       │ Leave-One-Subject-Out  │
+        │ training/testing     │       │ (LOSO) evaluation       │
+        └──────────┬───────────┘       └────────────┬───────────┘
+                   │                                │
+                   └──────────────┬─────────────────┘
+                                  │
+                                  ▼
+                    ┌──────────────────────────────┐
+                    │        Evaluation             │
+                    │                              │
+                    │ Accuracy                     │
+                    │ Confusion Matrices           │
+                    │ Subject-level performance    │
+                    │ Generalization gap            │
+                    └──────────────┬───────────────┘
+                                   │
+                                   ▼
+                    ┌──────────────────────────────┐
+                    │     Statistical Analysis      │
+                    │                              │
+                    │ Method comparisons            │
+                    │ Subject improvements          │
+                    │ Statistical comparisons        │
+                    │ LOSO statistical analysis      │
+                    └──────────────┬───────────────┘
+                                   │
+                                   ▼
+                    ┌──────────────────────────────┐
+                    │       Research Outputs        │
+                    │                              │
+                    │ CSV result tables             │
+                    │ Paper-ready tables            │
+                    │ Performance plots              │
+                    │ Confusion matrices             │
+                    │ Final research conclusion      │
+                    └──────────────────────────────┘
