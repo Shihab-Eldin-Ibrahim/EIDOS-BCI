@@ -627,6 +627,7 @@ EIDOS-BCI is being developed as a research-oriented project for **IEEE ESPC 2026
 The project provides a modular foundation for investigating EEG-based Brain–Computer Interfaces, with a particular focus on the challenge of generalizing motor imagery classification to previously unseen subjects.
 
 The longer-term research direction is to investigate how robust EEG-based BCI systems could contribute to real-time BCI applications and, eventually, Brain–Computer Interface / Virtual Reality research.
+
 ---
 
 # Citation
