@@ -1,0 +1,4 @@
+Classifier,CSP Mean (%),FBCSP Mean (%),Mean Change (pp),Paired t-statistic,Wilcoxon p-value,Cohen's d
+LDA,37.5772,37.0756,-0.5016,0.2402,0.8203,-0.0801
+SVM,34.3750,34.2978,-0.0772,0.0361,0.9609,-0.0120
+Logistic Regression,37.5000,37.5772,0.0772,-0.0322,1.0000,0.0107

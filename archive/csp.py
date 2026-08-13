@@ -8,7 +8,109 @@ from mne.decoding import CSP
 class CSPAnalysis:
 
     # ============================================================
-    # PREPARE EPOCHS
+    # ORIGINAL DATASET EEG CHANNELS
+    # ============================================================
+
+    EEG_CHANNELS = [
+
+        "EEG-Fz",
+
+        "EEG-0",
+        "EEG-1",
+        "EEG-2",
+        "EEG-3",
+        "EEG-4",
+
+        "EEG-5",
+        "EEG-C3",
+        "EEG-6",
+        "EEG-Cz",
+        "EEG-7",
+        "EEG-C4",
+        "EEG-8",
+
+        "EEG-9",
+        "EEG-10",
+        "EEG-11",
+        "EEG-12",
+        "EEG-13",
+
+        "EEG-14",
+        "EEG-Pz",
+        "EEG-15",
+        "EEG-16"
+    ]
+
+    # ============================================================
+    # STANDARD 10-20 CHANNEL NAMES
+    # ============================================================
+
+    STANDARD_CHANNELS = [
+
+        "Fz",
+
+        "FC3",
+        "FC1",
+        "FCz",
+        "FC2",
+        "FC4",
+
+        "C5",
+        "C3",
+        "C1",
+        "Cz",
+        "C2",
+        "C4",
+        "C6",
+
+        "CP3",
+        "CP1",
+        "CPz",
+        "CP2",
+        "CP4",
+
+        "P5",
+        "Pz",
+        "P3",
+        "P1"
+    ]
+
+    # ============================================================
+    # DATASET -> STANDARD MONTAGE MAPPING
+    # ============================================================
+
+    RENAME_DICT = {
+
+        "EEG-Fz": "Fz",
+
+        "EEG-0": "FC3",
+        "EEG-1": "FC1",
+        "EEG-2": "FCz",
+        "EEG-3": "FC2",
+        "EEG-4": "FC4",
+
+        "EEG-5": "C5",
+        "EEG-C3": "C3",
+        "EEG-6": "C1",
+        "EEG-Cz": "Cz",
+        "EEG-7": "C2",
+        "EEG-C4": "C4",
+        "EEG-8": "C6",
+
+        "EEG-9": "CP3",
+        "EEG-10": "CP1",
+        "EEG-11": "CPz",
+        "EEG-12": "CP2",
+        "EEG-13": "CP4",
+
+        "EEG-14": "P5",
+        "EEG-Pz": "Pz",
+        "EEG-15": "P3",
+        "EEG-16": "P1"
+    }
+
+    # ============================================================
+    # PREPARE EEG EPOCHS
     # ============================================================
 
     @staticmethod
@@ -17,101 +119,56 @@ class CSPAnalysis:
         eeg_epochs = epochs.copy()
 
         # --------------------------------------------------------
-        # Explicitly select the 22 EEG channels
+        # Verify all expected EEG channels exist
         # --------------------------------------------------------
 
-        eeg_channels = [
-            "EEG-Fz",
-            "EEG-0",
-            "EEG-1",
-            "EEG-2",
-            "EEG-3",
-            "EEG-4",
-            "EEG-5",
-            "EEG-C3",
-            "EEG-6",
-            "EEG-Cz",
-            "EEG-7",
-            "EEG-C4",
-            "EEG-8",
-            "EEG-9",
-            "EEG-10",
-            "EEG-11",
-            "EEG-12",
-            "EEG-13",
-            "EEG-14",
-            "EEG-Pz",
-            "EEG-15",
-            "EEG-16"
-        ]
-
-        # Make sure all channels exist
-
         missing = [
-            ch for ch in eeg_channels
+            ch
+            for ch in CSPAnalysis.EEG_CHANNELS
             if ch not in eeg_epochs.ch_names
         ]
 
         if missing:
+
             raise ValueError(
-                f"Missing EEG channels: {missing}"
+                "Missing EEG channels: "
+                f"{missing}"
             )
 
-        # Pick ONLY these 22 channels
+        # --------------------------------------------------------
+        # Pick exactly the 22 EEG channels
+        # --------------------------------------------------------
 
         eeg_epochs.pick(
-            eeg_channels
+            CSPAnalysis.EEG_CHANNELS
         )
 
         # --------------------------------------------------------
-        # Rename channels to standard 10-20 names
+        # Rename channels to standard names
         # --------------------------------------------------------
-
-        rename_dict = {
-            "EEG-Fz": "Fz",
-
-            "EEG-0": "FC3",
-            "EEG-1": "FC1",
-            "EEG-2": "FCz",
-            "EEG-3": "FC2",
-            "EEG-4": "FC4",
-
-            "EEG-5": "C5",
-            "EEG-C3": "C3",
-            "EEG-6": "C1",
-            "EEG-Cz": "Cz",
-            "EEG-7": "C2",
-            "EEG-C4": "C4",
-            "EEG-8": "C6",
-
-            "EEG-9": "CP3",
-            "EEG-10": "CP1",
-            "EEG-11": "CPz",
-            "EEG-12": "CP2",
-            "EEG-13": "CP4",
-
-            "EEG-14": "P5",
-            "EEG-Pz": "Pz",
-            "EEG-15": "P3",
-            "EEG-16": "P1"
-        }
 
         eeg_epochs.rename_channels(
-            rename_dict
+            CSPAnalysis.RENAME_DICT
         )
 
         # --------------------------------------------------------
-        # Apply standard electrode positions
+        # Apply standard montage
         # --------------------------------------------------------
 
-        montage = mne.channels.make_standard_montage(
-            "standard_1005"
+        montage = (
+            mne.channels.make_standard_montage(
+                "standard_1005"
+            )
         )
 
         eeg_epochs.set_montage(
             montage,
             on_missing="ignore"
         )
+
+        # --------------------------------------------------------
+        # Information
+        # --------------------------------------------------------
 
         print()
         print("=" * 60)
@@ -124,15 +181,43 @@ class CSPAnalysis:
         )
 
         print(
-            "Channel names:"
+            "Expected EEG channels:",
+            len(
+                CSPAnalysis.STANDARD_CHANNELS
+            )
         )
 
-        for i, ch in enumerate(
+        print(
+            "EOG channels removed:",
+            len(
+                epochs.ch_names
+            )
+            - len(
+                eeg_epochs.ch_names
+            )
+        )
+
+        print("\nChannel names:")
+
+        for index, channel in enumerate(
             eeg_epochs.ch_names,
             start=1
         ):
+
             print(
-                f"{i:2d}. {ch}"
+                f"{index:2d}. {channel}"
+            )
+
+        # --------------------------------------------------------
+        # Safety check
+        # --------------------------------------------------------
+
+        if len(eeg_epochs.ch_names) != 22:
+
+            raise ValueError(
+                "CSP requires exactly 22 EEG channels, "
+                f"but received "
+                f"{len(eeg_epochs.ch_names)}"
             )
 
         return eeg_epochs
@@ -152,46 +237,82 @@ class CSPAnalysis:
         # Prepare EEG
         # --------------------------------------------------------
 
-        eeg_epochs = CSPAnalysis.prepare_epochs(
-            epochs
+        eeg_epochs = (
+            CSPAnalysis.prepare_epochs(
+                epochs
+            )
         )
 
         # --------------------------------------------------------
         # Select requested classes
         # --------------------------------------------------------
 
-        selected_epochs = eeg_epochs[
-            conditions
-        ]
+        selected_epochs = (
+            eeg_epochs[
+                conditions
+            ]
+        )
 
         # --------------------------------------------------------
-        # Get EEG data
+        # EEG data
         # --------------------------------------------------------
 
-        X = selected_epochs.get_data()
+        X = selected_epochs.get_data(
+            copy=True
+        )
 
         # --------------------------------------------------------
-        # Get event IDs
+        # Event IDs
         # --------------------------------------------------------
 
-        first_id = selected_epochs.event_id[
-            conditions[0]
-        ]
+        first_id = (
+            selected_epochs.event_id[
+                conditions[0]
+            ]
+        )
 
-        second_id = selected_epochs.event_id[
-            conditions[1]
-        ]
+        second_id = (
+            selected_epochs.event_id[
+                conditions[1]
+            ]
+        )
 
         # --------------------------------------------------------
-        # Create binary labels
+        # Binary labels
         # --------------------------------------------------------
 
         y = np.where(
             selected_epochs.events[:, -1]
             == first_id,
+
             0,
+
             1
         )
+
+        # --------------------------------------------------------
+        # Safety checks
+        # --------------------------------------------------------
+
+        if X.shape[1] != 22:
+
+            raise ValueError(
+                "CSP received "
+                f"{X.shape[1]} channels. "
+                "Expected exactly 22."
+            )
+
+        if not np.all(
+            np.isin(
+                selected_epochs.events[:, -1],
+                [first_id, second_id]
+            )
+        ):
+
+            raise ValueError(
+                "Unexpected event IDs detected "
+                "during CSP preparation."
+            )
 
         # --------------------------------------------------------
         # Create CSP
@@ -205,7 +326,7 @@ class CSPAnalysis:
         )
 
         # --------------------------------------------------------
-        # Fit CSP and transform EEG
+        # Fit CSP
         # --------------------------------------------------------
 
         X_csp = csp.fit_transform(
@@ -294,40 +415,11 @@ class CSPAnalysis:
     ):
 
         # --------------------------------------------------------
-        # Explicitly define the same 22 channels
-        # --------------------------------------------------------
-
-        eeg_channels = [
-            "Fz",
-            "FC3",
-            "FC1",
-            "FCz",
-            "FC2",
-            "FC4",
-            "C5",
-            "C3",
-            "C1",
-            "Cz",
-            "C2",
-            "C4",
-            "C6",
-            "CP3",
-            "CP1",
-            "CPz",
-            "CP2",
-            "CP4",
-            "P5",
-            "Pz",
-            "P3",
-            "P1"
-        ]
-
-        # --------------------------------------------------------
-        # Create completely new Info
+        # Create fresh Info
         # --------------------------------------------------------
 
         info = mne.create_info(
-            ch_names=eeg_channels,
+            ch_names=CSPAnalysis.STANDARD_CHANNELS,
             sfreq=epochs.info["sfreq"],
             ch_types="eeg"
         )
@@ -336,8 +428,10 @@ class CSPAnalysis:
         # Standard montage
         # --------------------------------------------------------
 
-        montage = mne.channels.make_standard_montage(
-            "standard_1005"
+        montage = (
+            mne.channels.make_standard_montage(
+                "standard_1005"
+            )
         )
 
         info.set_montage(
@@ -358,17 +452,19 @@ class CSPAnalysis:
             axes = [axes]
 
         # --------------------------------------------------------
-        # Plot each CSP component
+        # Plot patterns
         # --------------------------------------------------------
 
         for component in range(
             n_components
         ):
 
-            pattern = csp.patterns_[
-                :,
-                component
-            ]
+            pattern = (
+                csp.patterns_[
+                    :,
+                    component
+                ]
+            )
 
             mne.viz.plot_topomap(
                 pattern,
@@ -378,13 +474,12 @@ class CSPAnalysis:
                 contours=6
             )
 
-            axes[component].set_title(
-                f"CSP Component {component + 1}"
+            axes[
+                component
+            ].set_title(
+                f"CSP Component "
+                f"{component + 1}"
             )
-
-        # --------------------------------------------------------
-        # Figure title
-        # --------------------------------------------------------
 
         fig.suptitle(
             title,
@@ -406,12 +501,25 @@ class CSPAnalysis:
         class_names
     ):
 
+        if features.shape[1] < 2:
+
+            raise ValueError(
+                "At least 2 CSP components "
+                "are required to plot "
+                "feature space."
+            )
+
         fig, ax = plt.subplots(
             figsize=(8, 6)
         )
 
-        class_0 = labels == 0
-        class_1 = labels == 1
+        class_0 = (
+            labels == 0
+        )
+
+        class_1 = (
+            labels == 1
+        )
 
         ax.scatter(
             features[class_0, 0],
@@ -437,12 +545,15 @@ class CSPAnalysis:
 
         ax.set_title(
             f"CSP Feature Space - "
-            f"{class_names[0]} vs {class_names[1]}"
+            f"{class_names[0]} vs "
+            f"{class_names[1]}"
         )
 
         ax.legend()
 
-        ax.grid(True)
+        ax.grid(
+            True
+        )
 
         plt.tight_layout()
 

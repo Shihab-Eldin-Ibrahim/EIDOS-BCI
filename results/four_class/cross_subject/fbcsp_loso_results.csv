@@ -1,0 +1,28 @@
+Test Subject,Classifier,Accuracy (%)
+A01,LDA,45.4861
+A01,SVM,43.0556
+A01,Logistic Regression,45.1389
+A02,LDA,27.0833
+A02,SVM,20.4861
+A02,Logistic Regression,26.3889
+A03,LDA,52.4306
+A03,SVM,46.8750
+A03,Logistic Regression,53.4722
+A04,LDA,27.7778
+A04,SVM,37.8472
+A04,Logistic Regression,29.1667
+A05,LDA,25.0000
+A05,SVM,22.5694
+A05,Logistic Regression,24.3056
+A06,LDA,32.9861
+A06,SVM,30.2083
+A06,Logistic Regression,34.0278
+A07,LDA,32.6389
+A07,SVM,32.2917
+A07,Logistic Regression,34.3750
+A08,LDA,44.0972
+A08,SVM,37.8472
+A08,Logistic Regression,44.0972
+A09,LDA,46.1806
+A09,SVM,37.5000
+A09,Logistic Regression,47.2222

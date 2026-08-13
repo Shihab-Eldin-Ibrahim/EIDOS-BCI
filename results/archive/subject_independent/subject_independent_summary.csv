@@ -1,0 +1,4 @@
+Classifier,Standard CSP Mean (%),Standard CSP Std (%),FBCSP Mean (%),FBCSP Std (%),Improvement (percentage points)
+LDA,37.5772,13.4912,32.7160,3.7549,-4.8611
+SVM,34.0664,10.3170,31.0957,5.2833,-2.9707
+Logistic Regression,37.5772,13.5592,32.6775,3.7172,-4.8997

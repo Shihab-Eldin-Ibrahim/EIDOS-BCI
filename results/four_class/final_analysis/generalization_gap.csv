@@ -1,0 +1,7 @@
+Method,Classifier,Within-Subject Mean (%),LOSO Mean (%),Generalization Gap (pp),LOSO Retention (%)
+Standard CSP,LDA,60.9948,37.5772,23.4176,61.6072
+FBCSP,LDA,67.0229,37.0756,29.9473,55.3178
+Standard CSP,SVM,59.6034,34.3750,25.2284,57.6729
+FBCSP,SVM,68.2497,34.2978,33.9518,50.2535
+Standard CSP,Logistic Regression,60.2205,37.5000,22.7205,62.2712
+FBCSP,Logistic Regression,67.3651,37.5772,29.7879,55.7814

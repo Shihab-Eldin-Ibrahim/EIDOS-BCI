@@ -1,0 +1,28 @@
+Test Subject,Experiment,Classifier,Accuracy (%)
+A01,fbcsp,LDA,32.9861
+A01,fbcsp,SVM,33.6806
+A01,fbcsp,Logistic Regression,32.6389
+A02,fbcsp,LDA,32.6389
+A02,fbcsp,SVM,20.8333
+A02,fbcsp,Logistic Regression,29.5139
+A03,fbcsp,LDA,38.5417
+A03,fbcsp,SVM,34.7222
+A03,fbcsp,Logistic Regression,39.9306
+A04,fbcsp,LDA,36.8056
+A04,fbcsp,SVM,36.4583
+A04,fbcsp,Logistic Regression,35.7639
+A05,fbcsp,LDA,28.4722
+A05,fbcsp,SVM,26.0417
+A05,fbcsp,Logistic Regression,29.5139
+A06,fbcsp,LDA,28.1250
+A06,fbcsp,SVM,32.6389
+A06,fbcsp,Logistic Regression,28.4722
+A07,fbcsp,LDA,28.4722
+A07,fbcsp,SVM,33.6806
+A07,fbcsp,Logistic Regression,30.2083
+A08,fbcsp,LDA,34.7222
+A08,fbcsp,SVM,35.0694
+A08,fbcsp,Logistic Regression,34.7222
+A09,fbcsp,LDA,33.6806
+A09,fbcsp,SVM,26.7361
+A09,fbcsp,Logistic Regression,33.3333

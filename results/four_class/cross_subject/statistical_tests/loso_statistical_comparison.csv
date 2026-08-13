@@ -1,0 +1,4 @@
+Classifier,Subjects,Standard CSP Mean (%),Standard CSP Std (%),FBCSP Mean (%),FBCSP Std (%),Mean Change (pp),Change Std,Minimum Change (pp),Maximum Change (pp),Shapiro Statistic,Shapiro p-value,Paired t-statistic,Paired t p-value,Wilcoxon Statistic,Wilcoxon p-value,Cohen's d,Effect Size,Improved Subjects,Decreased Subjects
+LDA,9,37.5772,13.4913,37.0756,10.0451,-0.5016,6.2647,-9.3750,8.6805,0.947049,0.657715,0.240182,0.816230,20.000000,0.820312,-0.080061,negligible,4,5
+SVM,9,34.3750,10.4701,34.2978,8.7992,-0.0772,6.4090,-9.7222,7.9861,0.918704,0.381617,0.036116,0.972075,22.000000,0.960938,-0.012039,negligible,5,4
+Logistic Regression,9,37.5000,13.5372,37.5772,10.2486,0.0772,7.1808,-9.0278,10.4167,0.933663,0.516986,-0.032243,0.975068,22.000000,1.000000,0.010748,negligible,5,4

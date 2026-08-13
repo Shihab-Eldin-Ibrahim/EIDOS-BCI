@@ -1,0 +1,4 @@
+Classifier,Standard CSP Mean (%),FBCSP Mean (%),Change (pp)
+LDA,60.9948,67.0229,6.0281
+SVM,59.6034,68.2496,8.6462
+Logistic Regression,60.2205,67.3651,7.1446

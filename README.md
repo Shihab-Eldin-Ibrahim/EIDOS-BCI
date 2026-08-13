@@ -1,18 +1,25 @@
 # EIDOS-BCI
 
-A modular EEG signal processing framework for Brain–Computer Interface (BCI) research.
+A modular EEG signal processing and machine learning framework for
+Brain–Computer Interface (BCI) research.
 
 ## Overview
 
-EIDOS-BCI is a Python-based framework for processing and analyzing EEG signals using MNE-Python.
+EIDOS-BCI is a Python-based framework for processing and analyzing EEG
+signals using MNE-Python and machine learning techniques.
 
-The project is being developed as part of **IEEE ESPC 2026** and focuses on building a modular pipeline for **Motor Imagery (MI) EEG analysis**.
+The project is being developed as part of **IEEE ESPC 2026** and focuses on
+Motor Imagery (MI) EEG analysis using the **BCI Competition IV Dataset 2a**.
+
+The project investigates EEG spatial filtering and classification methods
+for four-class Motor Imagery BCI.
 
 The long-term goal is to develop a foundation for:
 
 - Motor Imagery Brain–Computer Interfaces
 - EEG signal processing
 - Machine learning for BCI
+- Cross-subject BCI generalization
 - Real-time BCI systems
 - Brain–Computer Interface and Virtual Reality research
 
@@ -20,7 +27,7 @@ The long-term goal is to develop a foundation for:
 
 ## Current Pipeline
 
-The current processing pipeline is:
+The current research pipeline is:
 
 ```text
 BCI Competition IV Dataset 2a
@@ -46,8 +53,35 @@ BCI Competition IV Dataset 2a
             │               │
             └───────┬───────┘
                     ▼
-                   CSP
+              Spatial Filtering
+                    │
+             ┌──────┴──────┐
+             ▼             ▼
+          Standard         FBCSP
+             CSP
+             │             │
+             └──────┬──────┘
+                    ▼
+             Feature Extraction
                     │
                     ▼
-             Classification
-               (planned)
+              Classification
+                    │
+          ┌─────────┼─────────┐
+          ▼         ▼         ▼
+         LDA      Logistic    SVM
+                  Regression
+                    │
+             ┌──────┴──────┐
+             ▼             ▼
+      Within-Subject   Cross-Subject
+         Analysis          LOSO
+                           │
+                           ▼
+                 Statistical Analysis
+                           │
+                           ▼
+                 Generalization Analysis
+                           │
+                           ▼
+                    Final Results
