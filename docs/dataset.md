@@ -1,40 +1,31 @@
 # BCI Competition IV — Dataset 2a
 
-## Recording
+## Overview
 
-File currently being analyzed:
+EIDOS-BCI uses the **BCI Competition IV Dataset 2a** as the primary
+dataset for Motor Imagery (MI) EEG research.
 
-`A01T.gdf`
+The dataset contains EEG recordings from multiple subjects performing
+four different motor imagery tasks:
 
-## Signal Information
+- Left hand
+- Right hand
+- Feet
+- Tongue
 
-- Total channels: 25
-- EEG channels: 22
-- EOG channels: 3
-- Sampling frequency: 250 Hz
-- Duration: approximately 2690 seconds
+The dataset is used to evaluate EEG preprocessing, spatial filtering,
+feature extraction, classification, and cross-subject generalization.
 
-## Event Types
+---
 
-| Code | Description |
-|---:|---|
-| 276 | Idle EEG — eyes open |
-| 277 | Idle EEG — eyes closed |
-| 768 | Start of trial |
-| 769 | Left-hand imagery |
-| 770 | Right-hand imagery |
-| 771 | Foot imagery |
-| 772 | Tongue imagery |
-| 1023 | Rejected trial |
-| 1072 | Eye movements |
-| 32766 | Start of new run |
+## Recording Structure
 
-## Current Research Goal
+The dataset contains recordings for **9 subjects**.
 
-Determine whether EEG signals can be used to classify
-motor imagery tasks.
+Each subject has training and evaluation recordings:
 
-## Next Step
-
-Extract individual trials from the continuous EEG recording
-using the event markers.
+```text
+A01T.gdf   A01E.gdf
+A02T.gdf   A02E.gdf
+...
+A09T.gdf   A09E.gdf
