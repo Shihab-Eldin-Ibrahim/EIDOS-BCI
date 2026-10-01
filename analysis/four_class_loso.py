@@ -20,6 +20,7 @@ from core.metadata import EEGMetadata
 
 from preprocessing.epoching import EEGEpoching
 from preprocessing.filtering import EEGFilter
+from preprocessing.domain_adaptation import euclidean_alignment
 
 
 # ============================================================
@@ -420,6 +421,8 @@ def load_subject_data(
         CLASSIFICATION_TMAX
     )
 
+    X = euclidean_alignment(X)
+
     # --------------------------------------------------------
     # FBCSP data
     # --------------------------------------------------------
@@ -449,6 +452,8 @@ def load_subject_data(
                 CLASSIFICATION_TMAX
             )
         )
+        
+  band_X = euclidean_alignment(band_X)
 
         if not np.array_equal(
             y,
