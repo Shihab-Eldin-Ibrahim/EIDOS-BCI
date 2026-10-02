@@ -453,7 +453,7 @@ def load_subject_data(
             )
         )
         
-  band_X = euclidean_alignment(band_X)
+        band_X = euclidean_alignment(band_X)
 
         if not np.array_equal(
             y,
